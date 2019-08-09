@@ -1,3 +1,10 @@
+console.log('in %s', __filename)
+
+const arg = require('arg')
+const args = arg({
+  '--cypress-runner-url': String
+}, {permissive: true}) // allow unknown options
+
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
 const path = require('path')
@@ -17,7 +24,13 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  // mainWindow.loadFile('index.html')
+  if (args['--cypress-runner-url']) {
+    console.log('loading Cypress url %s', args['--cypress-runner-url'])
+    mainWindow.loadURL(args['--cypress-runner-url'])
+  } else {
+    mainWindow.loadFile('index.html')
+  }
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
