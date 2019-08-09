@@ -1,8 +1,10 @@
+// @ts-check
 console.log('in %s', __filename)
 
 const arg = require('arg')
 const args = arg({
-  '--cypress-runner-url': String
+  '--cypress-runner-url': String,
+  '--load-extension': String
 }, {permissive: true}) // allow unknown options
 
 // Modules to control application life and create native browser window
@@ -14,12 +16,25 @@ const path = require('path')
 let mainWindow
 
 function createWindow () {
+  if (args['--load-extension']) {
+    const extensions = args['--load-extension'].split(',')
+    extensions.forEach((ext) => {
+      console.log('loading extension', ext)
+      const name = BrowserWindow.addExtension(ext)
+      console.log('extension has returned name: %s', name)
+    })
+    console.log('loaded extensions\n%s', extensions.join('\n'))
+  }
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      // ? should we just preload Cypress scripts if passed
+      preload: path.join(__dirname, 'preload.js'),
+      nodeIntegration: false,
+      nativeWindowOpen: true,
+      webSecurity: false,
     }
   })
 
