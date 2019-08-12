@@ -4,8 +4,7 @@ console.log('in %s', __filename)
 const arg = require('arg')
 const args = arg(
   {
-    '--cypress-runner-url': String,
-    '--load-extension': String
+    '--cypress-runner-url': String
   },
   { permissive: true }
 ) // allow unknown options
@@ -19,15 +18,6 @@ const path = require('path')
 let mainWindow
 
 function createWindow () {
-  // if (args['--load-extension']) {
-  //   const extensions = args['--load-extension'].split(',')
-  //   extensions.forEach(ext => {
-  //     console.log('loading extension', ext)
-  //     const name = BrowserWindow.addExtension(ext)
-  //     console.log('extension has returned name: %s', name)
-  //   })
-  //   console.log('loaded extensions\n%s', extensions.join('\n'))
-  // }
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
