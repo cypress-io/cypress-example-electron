@@ -2,13 +2,16 @@
 console.log('in %s', __filename)
 
 const arg = require('arg')
-const args = arg({
-  '--cypress-runner-url': String,
-  '--load-extension': String
-}, {permissive: true}) // allow unknown options
+const args = arg(
+  {
+    '--cypress-runner-url': String,
+    '--load-extension': String
+  },
+  { permissive: true }
+) // allow unknown options
 
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -16,15 +19,15 @@ const path = require('path')
 let mainWindow
 
 function createWindow () {
-  if (args['--load-extension']) {
-    const extensions = args['--load-extension'].split(',')
-    extensions.forEach((ext) => {
-      console.log('loading extension', ext)
-      const name = BrowserWindow.addExtension(ext)
-      console.log('extension has returned name: %s', name)
-    })
-    console.log('loaded extensions\n%s', extensions.join('\n'))
-  }
+  // if (args['--load-extension']) {
+  //   const extensions = args['--load-extension'].split(',')
+  //   extensions.forEach(ext => {
+  //     console.log('loading extension', ext)
+  //     const name = BrowserWindow.addExtension(ext)
+  //     console.log('extension has returned name: %s', name)
+  //   })
+  //   console.log('loaded extensions\n%s', extensions.join('\n'))
+  // }
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -35,8 +38,10 @@ function createWindow () {
       nodeIntegration: false,
       nativeWindowOpen: true,
       webSecurity: false,
+      devTools: true
     }
   })
+  mainWindow.webContents.openDevTools()
 
   // and load the index.html of the app.
   // mainWindow.loadFile('index.html')
@@ -46,9 +51,6 @@ function createWindow () {
   } else {
     mainWindow.loadFile('index.html')
   }
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function () {

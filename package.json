@@ -4,7 +4,9 @@
   "description": "A minimal Electron application",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "debug-main-process": "electron --inspect=5858 .",
+    "debug-window-process": "electron --remote-debugging-port=9222 ."
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
