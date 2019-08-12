@@ -26,7 +26,7 @@ function createWindow () {
     webPreferences: {
       // ? should we just preload Cypress scripts if passed
       preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: false,
+      nodeIntegration: true,
       nativeWindowOpen: true,
       webSecurity: false,
       devTools: true
