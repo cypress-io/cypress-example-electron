@@ -32,6 +32,7 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    title: 'Main electron app',
     webPreferences: {
       // ? should we just preload Cypress scripts if passed
       preload: path.join(__dirname, 'preload.js'),
@@ -41,14 +42,30 @@ function createWindow () {
       devTools: true
     }
   })
-  mainWindow.webContents.openDevTools()
+  // mainWindow.webContents.openDevTools()
 
   // and load the index.html of the app.
   // mainWindow.loadFile('index.html')
   if (args['--cypress-runner-url']) {
     console.log('loading Cypress url %s', args['--cypress-runner-url'])
-    mainWindow.loadURL(args['--cypress-runner-url'])
+    // see https://electronjs.org/docs/api/window-open
+    // for all options, like node integration, preload etc.
+    let testRunnerWindow = new BrowserWindow({
+      width: 800,
+      height: 600,
+      title: 'Specs',
+      webPreferences: {
+        nativeWindowOpen: true,
+        webSecurity: false,
+        devTools: true
+      }
+    })
+    testRunnerWindow.loadURL(args['--cypress-runner-url'])
+    console.log('testWindow is', testRunnerWindow)
+
+    mainWindow.loadFile('index.html')
   } else {
+    console.log('loading file index.html')
     mainWindow.loadFile('index.html')
   }
 
