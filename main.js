@@ -1,4 +1,8 @@
 // @ts-check
+// Modules to control application life and create native browser window
+const { app, BrowserWindow } = require('electron')
+const path = require('path')
+
 console.log('in %s', __filename)
 
 const arg = require('arg')
@@ -8,10 +12,6 @@ const args = arg(
   },
   { permissive: true }
 ) // allow unknown options
-
-// Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
-const path = require('path')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -25,15 +25,15 @@ function createWindow () {
     title: 'Main electron app',
     webPreferences: {
       // ? should we just preload Cypress scripts if passed
-      preload: path.join(__dirname, 'preload.js'),
+      // preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
       nativeWindowOpen: true,
       webSecurity: false,
       devTools: true,
-      additionalArguments: [
-        '--cypress-runner-url',
-        args['--cypress-runner-url']
-      ]
+      // additionalArguments: [
+      //   '--cypress-runner-url',
+      //   args['--cypress-runner-url']
+      // ]
     }
   })
   mainWindow.webContents.openDevTools()
@@ -59,7 +59,8 @@ function createWindow () {
     // console.log('testWindow is', testRunnerWindow)
 
     // mainWindow.loadFile('index.html')
-    mainWindow.loadURL('http://localhost:4600/')
+    // mainWindow.loadURL('http://localhost:4600/')
+    mainWindow.loadURL(args['--cypress-runner-url'])
 
     // reloading the main window does not evaluate preload script
     // setTimeout(() => {
