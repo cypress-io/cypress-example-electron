@@ -29,7 +29,11 @@ function createWindow () {
       nodeIntegration: true,
       nativeWindowOpen: true,
       webSecurity: false,
-      devTools: true
+      devTools: true,
+      additionalArguments: [
+        '--cypress-runner-url',
+        args['--cypress-runner-url']
+      ]
     }
   })
   // mainWindow.webContents.openDevTools()
@@ -38,22 +42,33 @@ function createWindow () {
   // mainWindow.loadFile('index.html')
   if (args['--cypress-runner-url']) {
     console.log('loading Cypress url %s', args['--cypress-runner-url'])
-    // see https://electronjs.org/docs/api/window-open
-    // for all options, like node integration, preload etc.
-    let testRunnerWindow = new BrowserWindow({
-      width: 800,
-      height: 600,
-      title: 'Specs',
-      webPreferences: {
-        nativeWindowOpen: true,
-        webSecurity: false,
-        devTools: true
-      }
-    })
-    testRunnerWindow.loadURL(args['--cypress-runner-url'])
-    console.log('testWindow is', testRunnerWindow)
+    // // see https://electronjs.org/docs/api/window-open
+    // // for all options, like node integration, preload etc.
+    // let testRunnerWindow = new BrowserWindow({
+    //   width: 800,
+    //   height: 600,
+    //   title: 'Specs',
+    //   parent: mainWindow,
+    //   webPreferences: {
+    //     nativeWindowOpen: true,
+    //     webSecurity: false,
+    //     devTools: true
+    //   }
+    // })
+    // testRunnerWindow.loadURL(args['--cypress-runner-url'])
+    // console.log('testWindow is', testRunnerWindow)
 
-    mainWindow.loadFile('index.html')
+    // mainWindow.loadFile('index.html')
+    mainWindow.loadURL('http://localhost:4600/')
+
+    // reloading the main window does not evaluate preload script
+    // setTimeout(() => {
+    //   console.log('reloading main window')
+    //   mainWindow.reload()
+    // }, 20000)
+
+    // cannot change domain for an external site without proxy and script injection
+    // mainWindow.loadURL('http://todomvc.com/examples/vue/')
   } else {
     console.log('loading file index.html')
     mainWindow.loadFile('index.html')
