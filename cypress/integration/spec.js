@@ -1,10 +1,28 @@
+const url = require('url')
+const path = require('path')
+
+// escape Cypress browserify bundler!
+const trueProcess = global['process']
+console.log('true process reference', trueProcess)
+console.log('true process.cwd() "%s"', trueProcess.cwd())
+
 beforeEach(() => {
   console.log('before each test')
+  console.log('directory', __dirname)
+  console.log('filename', __filename)
+
+  const indexFileUrl = url.format({
+    pathname: path.join(trueProcess.cwd(), 'index.html'),
+    protocol: 'file:',
+    slashes: true
+  })
+  console.log('index file url "%s"', indexFileUrl)
 
   return new Promise((resolve) => {
+    const replace = true
     // let the test window open the electron main window
     const mw = open('http://localhost:4600', 'mainWindow')
-    // const mw = open('index.html', 'mainWindow')
+    // const mw = window.mw = open(indexFileUrl, 'mainWindow', replace)
 
     // if the proxy injects "document.domain = localhost"
     // then remote websites should work

@@ -61,6 +61,11 @@ function createWindow () {
     // console.log('testWindow is', testRunnerWindow)
 
     // mainWindow.loadFile('index.html')
+
+    // let child = new BrowserWindow({ parent: mainWindow })
+    // child.loadURL('http://localhost:4600')
+    // child.show()
+
     // mainWindow.loadURL('http://localhost:4600/')
     mainWindow.loadURL(args['--cypress-runner-url'])
 
