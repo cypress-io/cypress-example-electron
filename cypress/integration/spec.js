@@ -25,7 +25,7 @@ beforeEach(() => {
 })
 it('works', () => {
   // cy.wrap('electron.js').should('equal', 'electron.js')
-  // cy.get('#node-version').should('equal', '12.4.0')
+  cy.get('#node-version').should('have.text', '12.4.0')
   cy.contains('Static page')
   cy.get('button').click().click()
 

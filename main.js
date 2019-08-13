@@ -19,6 +19,7 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
+  // https://electronjs.org/docs/api/browser-window
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -27,6 +28,7 @@ function createWindow () {
       // ? should we just preload Cypress scripts if passed
       // preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
+      nodeIntegrationInSubFrames: true,
       nativeWindowOpen: true,
       webSecurity: false,
       devTools: true,

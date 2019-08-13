@@ -11,6 +11,18 @@
     and Electron <span id="electron-version"></span>.
 
     <!-- You can also require other files to run in this process -->
-    <script src="./renderer.js"></script>
+    <!-- <script src="./renderer.js"></script> -->
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const replaceText = (selector, text) => {
+          const element = document.getElementById(selector)
+          if (element) element.innerText = text
+        }
+
+        for (const type of ['chrome', 'node', 'electron']) {
+          replaceText(`${type}-version`, process.versions[type])
+        }
+      })
+    </script>
   </body>
 </html>
