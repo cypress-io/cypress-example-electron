@@ -23,6 +23,7 @@ beforeEach(() => {
   return new Promise(resolve => {
     const replace = true
     // let the test window open the electron main window
+    // ! replace / expose cy.visit to do "window.open"
     const mw = (window.mw = open(
       'http://localhost:4600',
       'mainWindow',
