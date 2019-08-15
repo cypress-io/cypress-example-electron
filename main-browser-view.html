@@ -2,11 +2,16 @@
   <h1>Browser view demo</h1>
   <p>this page embeds browser view instance below</p>
   <script>
-    let { remote, BrowserView } = require('electron')
+    let { remote } = require('electron')
 
     let win = remote.getCurrentWindow()
-    let view = new BrowserView()
-    win.addBrowserView(view)
+    win.getBrowserViews()[0].webContents.loadURL('https://cypress.io').then(a => {
+      console.log(a)
+      debugger
+    })
+    // debugger
+    // let view = new BrowserView()
+    // win.addBrowserView(view)
     // remote.getCurrentWindow().setBrowserView(view)
     // view.setBounds({ x: 0, y: 150, width: 800, height: 150 })
     // view.webContents.loadURL('https://electronjs.org')
