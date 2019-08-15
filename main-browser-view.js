@@ -18,7 +18,7 @@ function createWindow () {
 
   let view = new BrowserView()
   win.setBrowserView(view)
-  view.setBounds({ x: 0, y: 150, width: 800, height: 150 })
+  view.setBounds({ x: 0, y: 50, width: 800, height: 50 })
   view.webContents.loadURL('https://electronjs.org')
 }
 
