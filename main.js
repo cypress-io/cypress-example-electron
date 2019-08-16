@@ -1,6 +1,6 @@
 // @ts-check
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 
 console.log('in %s', __filename)
@@ -12,6 +12,30 @@ const args = arg(
   },
   { permissive: true }
 ) // allow unknown options
+
+/**
+ * Just a simple counter to demo how a Cypress test can reset it / increment it
+ */
+global.counter = 0
+
+// let's give Cypress tests access to the "global.counter"
+const tasks = {
+  setCounter (n) {
+    console.log('setting global.counter to', n)
+    global.counter = n
+  }
+}
+ipcMain.on('task', (e, taskName, ...args) => {
+  console.log('ipMain task "%s"', taskName)
+  if (tasks[taskName]) {
+    // TODO handle sync and promise-returning tasks
+    const result = tasks[taskName](...args)
+    e.returnValue = result
+  } else {
+    console.error('Unknown task name "%s"', taskName)
+    e.returnValue = null
+  }
+})
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -31,7 +55,7 @@ function createWindow () {
       nodeIntegrationInSubFrames: true,
       nativeWindowOpen: true,
       webSecurity: false,
-      devTools: true,
+      devTools: true
       // additionalArguments: [
       //   '--cypress-runner-url',
       //   args['--cypress-runner-url']
