@@ -1,23 +1,30 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
-    <script>
-      document.domain = 'localhost'
-    </script>
-  </head>
-  <body>
-    <h1>Static page</h1>
-    <button>Click me</button>
-    <input placeholder="Type something">
-    <script>
-      document.querySelector('button').addEventListener('click', () => {
-        console.log('clicked')
-      })
-    </script>
+<head>
+  <script>
+    document.domain = 'localhost'
+  </script>
+</head>
+<body>
+  <h1>Static page</h1>
+  <button>Click me</button>
+  <div id="clicked">0</div>
+  <input placeholder="Type something">
+  <script>
+    let clicked = 0
+    document.querySelector('button').addEventListener('click', () => {
+      console.log('clicked')
+      document.getElementById('clicked').innerText = `${clicked += 1}`
+    })
+  </script>
 
-    <h1>Electron part</h1>
+  <script>
+    setTimeout(() => {
+      const r = Math.random()
+      console.log('showing alert', r)
+      // console.log(Cypress.state('runnable'))
+    }, 100)
+  </script>
+
+  <h1>Electron part</h1>
     We are using Node.js <span id="node-version"></span>,
     Chromium <span id="chrome-version"></span>,
     and Electron <span id="electron-version"></span>.
@@ -36,5 +43,13 @@
         }
       })
     </script>
-  </body>
-</html>
+
+  <div>
+    <h2>Global counter</h2>
+    <div id="counter"></div>
+    <script>
+      let remote = require('electron').remote
+      document.getElementById('counter').innerHTML = remote.getGlobal('counter')
+    </script>
+  </div>
+</body>
