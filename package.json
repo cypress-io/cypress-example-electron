@@ -19,7 +19,9 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^6.0.1"
+    "@cypress/electron-plugin": "1.1.0",
+    "cypress": "https://cdn.cypress.io/beta/npm/3.5.0/circle-test-electron-app-4964-05caf31764a934d1446b46ae62b23dacfaef6afc-151611/cypress.tgz",
+    "electron": "6.0.9"
   },
   "dependencies": {
     "arg": "4.1.1"
