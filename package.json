@@ -9,7 +9,9 @@
     "debug-main-process": "electron --inspect=5858 .",
     "debug-window-process": "electron --remote-debugging-port=9222 .",
     "dev": "start-test serve 4600 cy:open",
-    "cy:open": "cypress open"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "headless": "start-test serve 4600 cy:run"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [

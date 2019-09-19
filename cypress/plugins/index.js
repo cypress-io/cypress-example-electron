@@ -14,9 +14,9 @@ module.exports = (on, config) => {
   // our local Electron as a browser
   config.browsers = [
     {
-      name: 'electron-sandbox',
+      name: 'electron-app',
       family: 'electron-app',
-      displayName: 'electron-sandbox',
+      displayName: 'Local Electron app',
       version: pkg.version,
       path: pathToElectron,
       // show full package version in the browser dropdown
